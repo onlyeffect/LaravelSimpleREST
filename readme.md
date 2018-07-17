@@ -1,3 +1,13 @@
+<h1>Simple CRUD REST API</h1>
+<h2>Functionality:</h2>
+<ul>
+    <li>Showing all articles</li>
+    <li>Showing one single article</li>
+    <li>Creating article</li>
+    <li>Updating article</li>
+    <li>Deleting article</li>
+</ul>
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

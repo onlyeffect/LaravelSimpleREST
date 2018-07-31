@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use Validator;
+use App\Http\Resources\Article as ArticleResource;
 
 
 class ArticlesController extends Controller
@@ -18,7 +19,7 @@ class ArticlesController extends Controller
     {
         $articles = Article::all();
 
-        return response()->json($articles);
+        return ArticleResource::collection($articles);
     }
 
     /**
@@ -35,19 +36,15 @@ class ArticlesController extends Controller
         ]);
             
         if($validator->fails()){
-            $response = [
-                'response' => $validator->messages(),
-                'success' => false
-            ];
+            $response = $validator->messages();
             return response()->json($response);
         } else {
             // Mass Assignment
             $article = Article::create([
-                'title' => $request->input('title'),
-                'text' => $request->input('text'),
+                'title' => $request->title,
+                'text' => $request->text,
             ]);
-
-            return response()->json($article);
+            return new ArticleResource($article);
         }
     }
 
@@ -60,11 +57,9 @@ class ArticlesController extends Controller
     public function show($id)
     {
         if($article = Article::find($id)){
-            return response()->json($article);
+            return new ArticleResource($article);
         } else {
-            $response = [
-                'response' => 'Article is not found.',
-            ];
+            $response = 'Article not found.';
             return response()->json($response);
         }
     }
@@ -76,25 +71,23 @@ class ArticlesController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'article_id' => 'required',
             'title' => 'required',
             'text' => 'required'
         ]);
             
         if($validator->fails()){
-            $response = [
-                'response' => $validator->messages(),
-                'success' => false
-            ];
+            $response = $validator->messages();
             return response()->json($response);
         } else {
-            $article = Article::findOrFail($id);
-            $article->title = $request->input('title');
-            $article->text = $request->input('text');
+            $article = Article::findOrFail($request->article_id);
+            $article->title = $request->title;
+            $article->text = $request->text;
             $article->save();
-            return response()->json($article);
+            return new ArticleResource($article);
         }
     }
 
@@ -108,12 +101,9 @@ class ArticlesController extends Controller
     {
         if($article = Article::find($id)){
             $article->delete();
-            return response()->json($article);
+            return new ArticleResource($article);
         } else {
-            $response = [
-                'response' => 'Article is not found.',
-                'success' => false
-            ];
+            $response = 'Article is not found.';
             return response()->json($response);
         }
     }

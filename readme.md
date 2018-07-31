@@ -1,11 +1,11 @@
 <h1>Simple CRUD REST API</h1>
 <h2>Functionality:</h2>
 <ul>
-    <li>Showing all articles</li>
-    <li>Showing one single article</li>
-    <li>Creating article</li>
-    <li>Updating article</li>
-    <li>Deleting article</li>
+    <li>Showing all articles — GET request to "example.com/api/articles"</li>
+    <li>Showing one single article — GET request to "example.com/api/article/id"</li>
+    <li>Creating article — POST request to "example.com/api/article" with "text" and "title" properties.</li>
+    <li>Updating article — PUT request to "example.com/api/article" with "article_id", "text" and "title" properties.</li>
+    <li>Deleting article — DELETE request to "example.com/api/article/id"</li>
 </ul>
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>

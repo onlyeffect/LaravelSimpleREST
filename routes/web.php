@@ -11,4 +11,4 @@
 |
 */
 
-Route::resource('api/articles', 'ArticlesController');
+//Route::resource('api/articles', 'ArticlesController');
